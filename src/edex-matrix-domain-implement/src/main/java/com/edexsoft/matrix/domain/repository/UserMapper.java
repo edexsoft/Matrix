@@ -4,6 +4,9 @@ import com.edexsoft.matrix.domain.User;
 import com.edexsoft.matrix.domain.UserExample;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+@Repository("UserMapper")
 public interface UserMapper {
 
 	/**
