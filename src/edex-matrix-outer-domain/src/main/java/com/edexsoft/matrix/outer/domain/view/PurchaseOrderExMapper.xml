@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edexsoft.matrix.outer.domain.view.ParchaseOrderExMapper">
+	<resultMap id="BaseResultMap"
+		extends="com.edexsoft.matrix.outer.domain.repository.ParchaseOrderMapper.BaseResultMap"
+		type="com.edexsoft.matrix.outer.domain.view.ParchaseOrderEx">
+		<collection 
+			property="items" 
+			column="purchase_order_id"
+			ofType="com.edexsoft.matrix.outer.domain.ParchaseOrderItem"
+			resultMap="com.edexsoft.matrix.outer.domain.repository.ParchaseOrderItemMapper.BaseResultMap" />
+	</resultMap>
+	<select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+			po.*,
+			poi.*
+		FROM
+			t_parchase_order po LEFT JOIN
+			t_parchase_order_item poi ON po.id=poi.parchase_orer_id
+		<where>
+			<if test="no != null and no != ''">
+				u.wxUserArea = #{city}
+			</if>
+			<if test="startTime != null and endTime != null">
+				AND po.delivery BETWEEN #{startTime} AND #{endTime}
+			</if>
+		</where>
+		ORDER BY
+			poi.id DESC
+		<if test="limit != null">
+			<if test="offset != null">
+				limit ${offset}, ${limit}
+			</if>
+			<if test="offset == null">
+				limit ${limit}
+			</if>
+		</if>
+	</select>
+	<select id="countAll" resultType="java.lang.Long">		
+		SELECT
+			COUNT(*)
+		FROM
+			t_parchase_order po LEFT JOIN
+			t_parchase_order_item poi ON po.id=poi.parchase_orer_id		
+		<where>
+			<if test="no != null and no != ''">
+				u.wxUserArea = #{city}
+			</if>
+			<if test="startTime != null and endTime != null">
+				AND po.delivery BETWEEN #{startTime} AND #{endTime}
+			</if>
+		</where>
+	</select>
+	<select id="findById" resultMap="BaseResultMap">
+		SELECT
+			po.*,
+			poi.*
+		FROM
+			t_parchase_order po LEFT JOIN
+			t_parchase_order_item poi ON po.id=poi.parchase_orer_id
+		<where>
+			<if test="true">
+				u.wxUserId = #{wxUserId}
+			</if>
+			<if test="city != null and city != ''">
+				AND uh.city LIKE CONCAT('%',#{city},'%')
+			</if>
+		</where>
+		ORDER BY
+			po.id
+	</select>
+</mapper>

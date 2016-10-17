@@ -22,10 +22,10 @@
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="driver" value="${jdbc.driver}" />
-				<property name="url" value="${jdbc.url}" />
-				<property name="username" value="${jdbc.username}" />
-				<property name="password" value="${jdbc.password}" />
+				<property name="driver" value="${jdbc.matrix.driver}" />
+				<property name="url" value="${jdbc.matrix.url}" />
+				<property name="username" value="${jdbc.matrix.username}" />
+				<property name="password" value="${jdbc.matrix.password}" />
 			</dataSource>
 		</environment>
 	</environments>

@@ -25,7 +25,9 @@
 			/> <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" 
 			/> -->
 	</context:component-scan>
-	
+	<!-- 多数据库(外接sql server)
+	<import resource="classpath:spring/spring-mybatis-outer.xml" />
+	-->
 	<import resource="classpath:spring/spring-mybatis.xml" />
 	<import resource="classpath:spring/spring-mvc.xml" />
 	<!--  

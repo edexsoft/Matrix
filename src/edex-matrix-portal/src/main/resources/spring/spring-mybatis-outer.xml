@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- <tx:annotation-driven></tx:annotation-driven> -->
+
+	<!-- mingyuan saledatabase -->
+	<bean id="dataSource_outer"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
+		<property name="url" value="jdbc:jtds:sqlserver://192.168.1.150:1433/db_outer" />
+		<property name="username" value="sa" />
+		<property name="password" value="sa" />
+	</bean>
+	<bean id="transactionManager_outer"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource_outer" />
+	</bean>
+	<bean 
+	   id="sqlSessionFactory_outer" 
+	   name="SqlSessionFactory_outer"
+	   class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_outer"></property>
+		<property name="configLocation" value="classpath:spring/mybatis-config-outer.xml" />
+		<!-- <property name="mapperLocations" value="classpath*:mapperConfig/ex/*.xml"/> -->
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.edexsoft.outer.domain.repository" />
+		<!-- 
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_outer"></property>
+		-->
+		<property name="sqlSessionFactory" ref="sqlSessionFactory_outer"></property>
+	</bean>
+    
+    <!--  
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="org.mybatis.spring.sample.mapper.UserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory_outer" />
+	</bean>
+	-->
+</beans>
