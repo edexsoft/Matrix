@@ -27,6 +27,5 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 		logger.info(String.format("app context %s startup.", oContext.getDisplayName()));
 		
 		// 
-//		WxApiConfig.loadProps();
 	}
 }

@@ -17,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edexsoft.framework.utility.JsonHelper;
 import com.edexsoft.matrix.portal.WxApiConfig;
-import com.edexsoft.webmvc.HttpProxy;
+import com.edexsoft.matrix.portal.WxApiHelper;
 import com.edexsoft.webmvc.JsonResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @RestController("api/wx/wxjssdk")
 public class WxJsSdkApiController {
@@ -40,50 +37,18 @@ public class WxJsSdkApiController {
 			oJsonResult = new JsonResult(-1, "参数错误,requestUrl不能为空.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-		
-		String sWxUrlGetToken = String.format("%s?grant_type=%s&appid=%s&secret=%s",
-				"https://api.weixin.qq.com/cgi-bin/token", "client_credential", WxApiConfig.WX_APP_ID, WxApiConfig.WX_SECRET);
-		
-		
-		HttpProxy oHttpProxy = HttpProxy.getProxy();
-		// {"access_token":"wNRlzkNFdxb_AhD4wogmCL9PUBNsxqK_qpe-Rnv5dRQXsckjaR998fnDkhlAVX9H1lrvssX2b82OxMfN0AuKsArukGXCjTv7p3waMq8TK4kF8bGLFGqLlGX4-jeT8wJKKUQcCAAEOK","expires_in":7200}
-		String sResult = null;
-		try {
-			sResult = oHttpProxy.get(sWxUrlGetToken, "UTF-8");
-		} catch (IOException e) {
-			logger.error(e.toString());
-		}
-		if (sResult == null || sResult.trim().isEmpty()) {
-			oJsonResult = new JsonResult(-11, "微信接口访问错误,微信接口token返回空字符串.");
-			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
-		}
-		JsonNode oJsonNode = JsonHelper.readTree(sResult);
-		if (oJsonNode == null) {
-			oJsonResult = new JsonResult(-12, "解析数据失败,解析微信接口token返回字符串失败.");
-			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
-		}
-		String sAccessToken = oJsonNode.get("access_token").asText();
 
-		String sWxUrlGetTicket = String.format("%s?access_token=%s&type=%s",
-				"https://api.weixin.qq.com/cgi-bin/ticket/getticket", sAccessToken, "jsapi");
-		// {"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qefgHi5aZwMipfguuBM88tsdWS_PSJ3HlHEKvqp6e0eTaCg08TwYz376WLcKYo-kHhw","expires_in":7200}
-		sResult = null;
-		try {
-			sResult = oHttpProxy.get(sWxUrlGetTicket, "UTF-8");
-		} catch (IOException e) {
-			logger.error(e.toString());
+		String sAccessToken = WxApiHelper.getToken();
+		if (sAccessToken == null || sAccessToken.trim().isEmpty()) {
+			oJsonResult = new JsonResult(-11, "微信接口访问错误,微信接口token返回空.");
+			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
 
-		if (sResult == null || sResult.trim().isEmpty()) {
-			oJsonResult = new JsonResult(-13, "微信接口访问错误,微信接口getticket返回空字符串.");
+		String sJsApiTicket = WxApiHelper.getTicket(sAccessToken);
+		if (sJsApiTicket == null || sJsApiTicket.trim().isEmpty()) {
+			oJsonResult = new JsonResult(-13, "微信接口访问错误,微信接口getticket返回空.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-		oJsonNode = JsonHelper.readTree(sResult);
-		if (oJsonNode == null) {
-			oJsonResult = new JsonResult(-14, "解析数据失败,解析微信接口getticket返回字符串失败.");
-			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
-		}
-		String sJsApiTicket = oJsonNode.get("ticket").asText();
 
 		String sTimestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
 		String sNonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
