@@ -25,53 +25,28 @@
 	<script type="text/javascript" src="/cdn/mobile/sui/1.4.2/js/sui.js"></script>
 	-->
 	<script type="text/javascript" src="/cdn/themes/wx/jweixin-1.0.0.js"></script>
-	
+	<script type="text/javascript" src="/cdn/themes/wx/wx.config.js"></script>
 	<script type="text/javascript">
-		wx.config({
-			debug: false,
-			appId: 'wxf8b4f85f3a794e77',
-			timestamp: 1476689826,
-			nonceStr: 'VwgmN1slWiApovOC',
-			signature: 'e1dbcf4a7bd2c5bbe4c2a3bbfaf0c61e03cac031',
-			jsApiList: [
-				'checkJsApi',
-				'onMenuShareTimeline',
-				'onMenuShareAppMessage',
-				'onMenuShareQQ',
-				'onMenuShareWeibo',
-				'onMenuShareQZone',
-				'hideMenuItems',
-				'showMenuItems',
-				'hideAllNonBaseMenuItem',
-				'showAllNonBaseMenuItem',
-				'translateVoice',
-				'startRecord',
-				'stopRecord',
-				'onVoiceRecordEnd',
-				'playVoice',
-				'onVoicePlayEnd',
-				'pauseVoice',
-				'stopVoice',
-				'uploadVoice',
-				'downloadVoice',
-				'chooseImage',
-				'previewImage',
-				'uploadImage',
-				'downloadImage',
-				'getNetworkType',
-				'openLocation',
-				'getLocation',
-				'hideOptionMenu',
-				'showOptionMenu',
-				'closeWindow',
-				'scanQRCode',
-				'chooseWXPay',
-				'openProductSpecificView',
-				'addCard',
-				'chooseCard',
-				'openCard'
-			]
+		$.ajax({
+			url:'/api/wx/wxjssdk/wxconfig?requestUrl='+ encodeURI(location.href) +'&t=' + new Date(),
+			method:'GET',
+			async:true,
+			dataType:'json',
+			success:function(data, textStatus, jqXHR) {
+				if(data.ResultCode<0)
+				{
+					alert('获取微信配置失败');
+					//location.href='';
+					return;
+				}
+				var wxConfig=$.extend(true, {}, wx_config, data.Data);
+				wx.config(wxConfig);
+			},
+			error:function(jqXHR, textStatus, errorThrown) {
+			   //alert( "error" );
+			}
 		});
+		
 
 		// config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，
 		// config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。

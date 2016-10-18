@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.edexsoft.framework.utility.JsonHelper;
+import com.edexsoft.matrix.portal.WxApiConfig;
 import com.edexsoft.webmvc.HttpProxy;
 import com.edexsoft.webmvc.JsonResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,9 +30,6 @@ public class WxJsSdkApiController {
 
 	private static Logger logger = Logger.getLogger(WxJsSdkApiController.class);
 
-	private static String wxAppId = "wx7b0499948c3815a9";
-	private static String wxSecret = "6cb036d8536f0a423ddfe1f53376d63e";
-
 	@RequestMapping(value = "/api/wx/wxjssdk/wxconfig", method = RequestMethod.GET)
 	public ResponseEntity<JsonResult> get(@RequestParam("requestUrl") String requestUrl, @RequestParam("t") String t) {
 
@@ -41,41 +40,33 @@ public class WxJsSdkApiController {
 			oJsonResult = new JsonResult(-1, "参数错误,requestUrl不能为空.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-
-		// JSONObject json = WeixinUtil.httpRequest(url, "GET", null);
+		
 		String sWxUrlGetToken = String.format("%s?grant_type=%s&appid=%s&secret=%s",
-				"https://api.weixin.qq.com/cgi-bin/token", "client_credential", wxAppId, wxSecret);
+				"https://api.weixin.qq.com/cgi-bin/token", "client_credential", WxApiConfig.WX_APP_ID, WxApiConfig.WX_SECRET);
+		
+		
 		HttpProxy oHttpProxy = HttpProxy.getProxy();
+		// {"access_token":"wNRlzkNFdxb_AhD4wogmCL9PUBNsxqK_qpe-Rnv5dRQXsckjaR998fnDkhlAVX9H1lrvssX2b82OxMfN0AuKsArukGXCjTv7p3waMq8TK4kF8bGLFGqLlGX4-jeT8wJKKUQcCAAEOK","expires_in":7200}
 		String sResult = null;
 		try {
 			sResult = oHttpProxy.get(sWxUrlGetToken, "UTF-8");
 		} catch (IOException e) {
 			logger.error(e.toString());
 		}
-
 		if (sResult == null || sResult.trim().isEmpty()) {
 			oJsonResult = new JsonResult(-11, "微信接口访问错误,微信接口token返回空字符串.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-
-		ObjectMapper oObjectMapper = new ObjectMapper();
-		JsonNode oJsonNode = null;
-		try {
-			oJsonNode = oObjectMapper.readTree(sResult);
-		} catch (JsonProcessingException e) {
-			logger.error(e.toString());
-		} catch (IOException e) {
-			logger.error(e.toString());
-		}
+		JsonNode oJsonNode = JsonHelper.readTree(sResult);
 		if (oJsonNode == null) {
 			oJsonResult = new JsonResult(-12, "解析数据失败,解析微信接口token返回字符串失败.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-
 		String sAccessToken = oJsonNode.get("access_token").asText();
 
 		String sWxUrlGetTicket = String.format("%s?access_token=%s&type=%s",
 				"https://api.weixin.qq.com/cgi-bin/ticket/getticket", sAccessToken, "jsapi");
+		// {"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qefgHi5aZwMipfguuBM88tsdWS_PSJ3HlHEKvqp6e0eTaCg08TwYz376WLcKYo-kHhw","expires_in":7200}
 		sResult = null;
 		try {
 			sResult = oHttpProxy.get(sWxUrlGetTicket, "UTF-8");
@@ -87,25 +78,18 @@ public class WxJsSdkApiController {
 			oJsonResult = new JsonResult(-13, "微信接口访问错误,微信接口getticket返回空字符串.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-		oJsonNode = null;
-		try {
-			oJsonNode = oObjectMapper.readTree(sResult);
-		} catch (JsonProcessingException e) {
-			logger.error(e.toString());
-		} catch (IOException e) {
-			logger.error(e.toString());
-		}
+		oJsonNode = JsonHelper.readTree(sResult);
 		if (oJsonNode == null) {
 			oJsonResult = new JsonResult(-14, "解析数据失败,解析微信接口getticket返回字符串失败.");
 			return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
 		}
-		String sJsApiTicket = oJsonNode.get("jsapi_ticket").asText();
+		String sJsApiTicket = oJsonNode.get("ticket").asText();
 
 		String sTimestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
 		String sNonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
 
 		// 注意这里参数名必须全部小写，且必须有序
-		String sSignOriginal = String.format("jsapi_ticket=%s&noncestr=%s&tamp=%s&url=%s", sJsApiTicket, sNonceStr,
+		String sSignOriginal = String.format("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", sJsApiTicket, sNonceStr,
 				sTimestamp, requestUrl);
 		String sSignature = null;
 		try {
@@ -120,14 +104,14 @@ public class WxJsSdkApiController {
 		}
 
 		Map<String, Object> oMap = new HashMap<String, Object>();
-		oMap.put("appId", wxAppId);
+		oMap.put("appId", WxApiConfig.WX_APP_ID);
 		oMap.put("timestamp", sTimestamp);
 		oMap.put("nonceStr", sNonceStr);
 		oMap.put("signature", sSignature);
 
-		oJsonResult = new JsonResult(0, "成功");
+		oJsonResult = new JsonResult(0, "成功", oMap);
 		return new ResponseEntity<JsonResult>(oJsonResult, HttpStatus.OK);
-		
+
 	}
 
 	/**
@@ -141,15 +125,25 @@ public class WxJsSdkApiController {
 	 * @throws 说明发生此异常的条件
 	 */
 	private static String byteToHex(final byte[] hash) {
-		
-		Formatter formatter = new Formatter();
-		for (byte b : hash) {
-			formatter.format("%02x", b);
-		}
-		String result = formatter.toString();
-		formatter.close();
-		return result;
 
+		// Formatter formatter = new Formatter();
+		// for (byte b : hash) {
+		// formatter.format("%02x", b);
+		// }
+		// String result = formatter.toString();
+		// formatter.close();
+		// return result;
+
+		StringBuffer hexString = new StringBuffer();
+		// 字节数组转换为 十六进制 数
+		for (int i = 0; i < hash.length; i++) {
+			String shaHex = Integer.toHexString(hash[i] & 0xFF);
+			if (shaHex.length() < 2) {
+				hexString.append(0);
+			}
+			hexString.append(shaHex);
+		}
+		return hexString.toString();
 	}
 }
 
