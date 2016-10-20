@@ -48,10 +48,11 @@
 	</dependencies>
 
 	 <modules>  
-        <module>../edex-matrix-domain</module>  
-        <module>../edex-matrix-domain-implement</module>  
-        <module>../edex-matrix-outer-domain</module>  
-        <module>../edex-matrix-outer-domain-implement</module>  
+        <module>../edex-matrix-domain</module>
+        <module>../edex-matrix-domain-implement</module>
+        <module>../edex-matrix-outer-domain</module>
+        <module>../edex-matrix-outer-domain-implement</module>
+        <module>../edex-matrix-portal</module>
     </modules>  
 
 	<build>

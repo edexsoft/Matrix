@@ -1,19 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>com.edexsoft.matrix</groupId>
 		<artifactId>edex-matrix-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
-	
+
+
 	<artifactId>edex-matrix-portal</artifactId>
 	<packaging>war</packaging>
 	<name>edex-matrix-portal Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<spring.version>4.3.2.RELEASE</spring.version>
 		<spring.dr.version>2.5.2.RELEASE</spring.dr.version>
@@ -33,6 +33,19 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>6.0.4</version>
 		</dependency>
+
+		<!-- 文件上传 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
 
 		<!-- spring -->
 		<!-- <dependency> <groupId>javassist</groupId> <artifactId>javassist</artifactId> 
@@ -80,7 +93,7 @@
 			<artifactId>edex-matrix-domain-implement</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.edexsoft.matrix</groupId>
 			<artifactId>edex-matrix-outer-domain-implement</artifactId>
@@ -88,5 +101,5 @@
 		</dependency>
 
 	</dependencies>
-	
+
 </project>

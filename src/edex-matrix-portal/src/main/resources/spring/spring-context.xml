@@ -14,6 +14,7 @@
 		base-package="
             com.edexsoft.matrix.domain,
             com.edexsoft.matrix.portal,
+            com.edexsoft.matrix.portal.controllers,
             com.edexsoft.matrix.portal.api.controllers,
             com.edexsoft.matrix.portal.api.root.controllers,
             com.edexsoft.matrix.portal.web.controllers,
