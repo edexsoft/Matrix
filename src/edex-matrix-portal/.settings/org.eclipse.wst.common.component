@@ -7,6 +7,9 @@
         <dependent-module archiveName="edex-webmvc-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/edex-webmvc/edex-webmvc">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="edex-security-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/edex-security/edex-security">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="edex-matrix-domain-implement-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/edex-matrix-domain-implement/edex-matrix-domain-implement">
             <dependency-type>uses</dependency-type>
         </dependent-module>
