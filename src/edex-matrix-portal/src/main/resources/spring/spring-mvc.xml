@@ -8,6 +8,10 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 	<mvc:resources mapping="/cdn/**" location="/cdn/" />
+	<!-- 上传文件 -->
+	<mvc:resources mapping="/static/images/**" location="/uploads/iamges/" />
+	<!-- 微信验证 -->
+	<mvc:resources mapping="/MP_verify_vTtj4yW9QDOKTUma.txt" location="/MP_verify_vTtj4yW9QDOKTUma.txt" />
 
 	<!-- 会自动注册RequestMappingHandlerMapping与RequestMappingHandlerAdapter两个bean, 
 		是spring MVC为@Controllers分发请求所必须的。 并提供了： 数据绑定支持， @NumberFormatannotation支持， 
@@ -39,9 +43,16 @@
 		<property name="maxUploadSize" value="100000" />
 	</bean>
 	<!--  
+	AntPathMatcher通配符
+	The mapping matches URLs using the following rules:
+	? matches one character
+	* matches zero or more characters
+	** matches zero or more 'directories' in a path
+	
 	<mvc:interceptors>
             <mvc:interceptor>
             <mvc:mapping path="/"  />
+            <mvc:exclude-mapping path="/api/*"/>  
             <bean  class="com.edexsoft.webmvc.interceptor.WebAuthorizeInteceptor"/>        
         </mvc:interceptor>
     </mvc:interceptors>
