@@ -34,7 +34,7 @@
         <div class="login-box-body">
             <p class="login-box-msg">登录</p>
 
-            <form action="/account/login" method="post">
+            <form action="/root/account/login" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" name="account" class="form-control" placeholder="手机号"> 
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
@@ -69,9 +69,9 @@
                 </a>
             </div>
             <!-- /.social-auth-links -->
-            <a href="/account/forgotpassword">忘记密码</a>
+            <a href="/root/account/forgotpassword">忘记密码</a>
             <br>
-            <a href="/account/register" class="text-center">注册</a>
+            <a href="/root/account/register" class="text-center">注册</a>
         </div>
         <!-- /.login-box-body -->
     </div>

@@ -10,16 +10,23 @@
 			http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
 	<http>
-		<intercept-url pattern="/**" access="hasRole('USER')" />
-		<form-login />
+		<intercept-url pattern="/root/**" access="hasRole('ADMIN')" />
+		
+		<!--  
+		default-target-url="/home/index"
+		-->
+		<form-login login-page="/account/login"			
+			authentication-success-handler-ref=""
+			login-processing-url=""
+			authentication-failure-url="/account/login?error=true"/>
 		<logout />
 	</http>
 
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN" />
-				<user name="bob" password="bobspassword" authorities="ROLE_USER" />
+				<user name="a" password="a" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="u" password="u" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
