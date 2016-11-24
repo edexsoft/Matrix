@@ -15,7 +15,7 @@ public class HomeController {
 		// model.addAttribute("message", "Hello World!");
 		String sView = "/root/home/index";		
 		Map<String, Object> oModel = new HashMap<String, Object>();
-		// oModel.put("userName", name);
+		//oModel.put("userName", request.userPrincipal.name);
 		return new ModelAndView(sView, oModel);
     }
 }

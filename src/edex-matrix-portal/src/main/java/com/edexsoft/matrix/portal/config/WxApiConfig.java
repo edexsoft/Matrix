@@ -1,4 +1,4 @@
-package com.edexsoft.matrix.portal;
+package com.edexsoft.matrix.portal.config;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

@@ -2,12 +2,12 @@ package com.edexsoft.matrix.outer.domain.view;
 
 import java.util.Date;
 
-import com.edexsoft.data.PagingDataResult;
+import com.edexsoft.data.PagingData;
 
 public interface IPurchaseOrderExService {
 
 	long GetTotalItemAmount(long purchaseOrderId);
 
-	PagingDataResult<PurchaseOrderEx> ListAll(String no,
+	PagingData<PurchaseOrderEx> ListAll(String no,
 			Date startTime, Date endTime, long pageIndex, long pageSize);
 }

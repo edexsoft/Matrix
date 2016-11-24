@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.edexsoft.matrix.portal.WxApiConfig;
-import com.edexsoft.matrix.portal.WxApiHelper;
+import com.edexsoft.matrix.portal.config.WxApiConfig;
+import com.edexsoft.matrix.portal.config.WxApiHelper;
 import com.edexsoft.webmvc.JsonResult;
 
 

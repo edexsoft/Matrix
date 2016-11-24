@@ -41,6 +41,10 @@
                 </div>
                 <div class="form-group has-feedback">
                     <input type="password" name="password" class="form-control" placeholder="密码"> 
+                    <!--  
+                    http://docs.spring.io/spring-security/site/docs/current/reference/html/csrf.html
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    -->
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">

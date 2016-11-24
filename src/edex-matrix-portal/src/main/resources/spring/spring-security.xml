@@ -10,25 +10,84 @@
 			http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
 	<http>
-		<intercept-url pattern="/root/**" access="hasRole('ADMIN')" />
+		<!--  
+		<intercept-url pattern="/cdn/**" access="permitAll()" requires-channel="https" />
+		<session-management  session-fixation-protection="newSession" session-authentication-error-url="/logout?timeout" >
+            <concurrency-control max-sessions="1" expired-url="/logout?expired" />
+        </session-management>
+        <custom-filter position="PRE_AUTH_FILTER" ref="entryFilter" />
+        <port-mappings >
+            <port-mapping http="7001" https="7002"  />
+        </port-mappings>
+
+	    <headers>
+	        <frame-options policy="SAMEORIGIN" />
+	        <hsts />
+	        <cache-control />
+	        <xss-protection />
+	        <content-type-options />
+	    </headers>
+		-->
+		<intercept-url pattern="/api/root/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/root/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/api/member/**" access="hasRole('ROLE_MEMBER')" />
+		<intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')" />
 		
 		<!--  
 		default-target-url="/home/index"
+		login-processing-url="/account/login"
 		-->
-		<form-login login-page="/account/login"			
-			authentication-success-handler-ref=""
-			login-processing-url=""
-			authentication-failure-url="/account/login?error=true"/>
-		<logout />
+		<form-login 
+			login-page="/account/login"			
+			authentication-success-handler-ref=""			
+		    password-parameter="account"
+		    username-parameter="username"
+			authentication-failure-url="/account/login?error=access_denied"/>
+		<logout
+			logout-success-url="/account/login"
+			logout-url="/account/logout"/>
+		<csrf disabled="true"/>
 	</http>
-
-	<authentication-manager>
+	
+	
+	<authentication-manager>		
+		<!--  
+		<authentication-provider user-service-ref="customUserDetailsService"/>	
+		-->	
 		<authentication-provider>
 			<user-service>
 				<user name="a" password="a" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="m" password="m" authorities="ROLE_MEMBER" />
 				<user name="u" password="u" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
-
+	
+	<!--
+	<bean id="org.springframework.security.authenticationManager" class="org.springframework.security.authentication.ProviderManager">  
+        <property name="authenticationEventPublisher" ref="defaultAuthenticationEventPublisher"></property>  
+        <property name="providers">  
+            <list>  
+                <ref local="daoAuthenticationProvider"/>  
+                <ref local="anonymousAuthenticationProvider"/>  
+            </list>  
+        </property>  
+    </bean>        
+    <bean id="defaultAuthenticationEventPublisher" class="org.springframework.security.authentication.DefaultAuthenticationEventPublisher"></bean>        
+    <bean id="anonymousAuthenticationProvider" class="org.springframework.security.authentication.AnonymousAuthenticationProvider">  
+        <property name="key"><value>work</value></property>  
+    </bean>        
+    <bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">  
+        <property name="userDetailsService" ref="userDetailsManager"></property>  
+    </bean>  
+	-->
+	<!--  
+	<beans:bean id="customUserDetailsService" class="com.websystique.springsecurity.service.CustomUserDetailsService" />
+	<beans:bean id="entryFilter" class="com.my.web.security.HeaderFilter" >
+        <beans:property name="authenticationManager" ref="CAP"/>
+    </beans:bean>
+    <beans:bean id="IAE" class="com.my.web.security.CustomAuthenticationEntryPoint" />
+    <beans:bean id="CAP" class="com.my.web.security.CustomAuthenticationManager" />
+	-->
+	
 </beans:beans>  

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.edexsoft.data.PagingDataResult;
+import com.edexsoft.data.PagingData;
 
 @Service("PurchaseOrderExService")
 public class PurchaseOrderExService implements IPurchaseOrderExService {
@@ -21,14 +21,14 @@ public class PurchaseOrderExService implements IPurchaseOrderExService {
 		return iTotalItemAmount;
 	}
 
-	public PagingDataResult<PurchaseOrderEx> ListAll(String no, Date startTime, Date endTime, long pageIndex,
+	public PagingData<PurchaseOrderEx> ListAll(String no, Date startTime, Date endTime, long pageIndex,
 			long pageSize) {
 		long totalRecords = entityMapper.countAll(no, startTime, endTime);
 
 		List<PurchaseOrderEx> lstEntity = entityMapper.selectAll(no, startTime, endTime, pageSize,
 				pageIndex * pageSize);
 
-		PagingDataResult<PurchaseOrderEx> dData = new PagingDataResult<PurchaseOrderEx>();
+		PagingData<PurchaseOrderEx> dData = new PagingData<PurchaseOrderEx>();
 		dData.setEntities(lstEntity);
 		dData.setPageIndex(pageIndex);
 		dData.setPageSize(pageSize);
