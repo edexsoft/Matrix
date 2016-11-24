@@ -4,15 +4,19 @@ import javax.annotation.PostConstruct;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 
+// https://github.com/keke77/spring-configuration-sample/blob/master/bakery-spring-web-api-config/src/main/java/com/gmind7/bakery/config/WebRestConfig.java
+
 @Configuration
 @Import(value = {
-	DataSourceConfig.class, 
-	WebSecurityConfig.class//,
+		WebMvcConfig.class
+//	DataSourceConfig.class, 
+//	WebSecurityConfig.class//,
 //	InfrastructureConfig.class, 
 //	RepositoryConfig.class, 
 //	ServiceConfig.class
@@ -35,5 +39,4 @@ public class AppConfig {
             }
         }
     }
-
 }
