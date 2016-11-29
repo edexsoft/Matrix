@@ -39,7 +39,7 @@
 		-->
 		<form-login 
 			login-page="/account/login"			
-			authentication-success-handler-ref=""			
+			authentication-success-handler-ref=""		
 		    password-parameter="account"
 		    username-parameter="username"
 			authentication-failure-url="/account/login?error=access_denied"/>

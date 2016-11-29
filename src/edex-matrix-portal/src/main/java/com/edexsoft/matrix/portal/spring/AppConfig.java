@@ -12,15 +12,15 @@ import org.springframework.core.env.Environment;
 
 // https://github.com/keke77/spring-configuration-sample/blob/master/bakery-spring-web-api-config/src/main/java/com/gmind7/bakery/config/WebRestConfig.java
 
-@Configuration
-@Import(value = {
-		WebMvcConfig.class
+//@Configuration
+//@Import(value = {
+//	WebMvcConfig.class,
 //	DataSourceConfig.class, 
 //	WebSecurityConfig.class//,
 //	InfrastructureConfig.class, 
 //	RepositoryConfig.class, 
 //	ServiceConfig.class
-})
+//})
 public class AppConfig {
 
 	private static final Logger logger = LogManager.getLogger(AppConfig.class);

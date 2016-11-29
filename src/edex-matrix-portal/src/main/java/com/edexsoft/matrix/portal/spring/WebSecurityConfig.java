@@ -10,17 +10,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.edexsoft.matrix.portal.spring.security.EdexAuthenticationSuccessHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	@Qualifier("ExexUserDetailsService")
-	UserDetailsService userDetailsService;
+//	@Autowired
+//	@Qualifier("ExexUserDetailsService")
+//	UserDetailsService userDetailsService;
 
 	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+		// auth.userDetailsService(userDetailsService);
 		// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	}
 	
@@ -42,14 +44,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/cdn/**");
+		// web.ignoring().antMatchers("/cdn/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/home").permitAll().antMatchers("/admin/**")
-				.access("hasRole('ADMIN')").antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')").and()
-				.formLogin().loginPage("/login").usernameParameter("ssoId").passwordParameter("password").and().csrf()
-				.and().exceptionHandling().accessDeniedPage("/Access_Denied");
+		http
+			.authorizeRequests()
+	//			.antMatchers("/", "/home").permitAll()
+				.antMatchers("/api/root/**").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/root/**").access("hasRole('ROLE_ADMIN')")
+				.antMatchers("/member/**").access("hasRole('ROLE_MEMBER')")
+				.antMatchers("/api/member/**").access("hasRole('ROLE_MEMBER')")
+				.anyRequest().permitAll()
+		.and()
+			.formLogin()
+				.loginPage("/account/login")
+				.usernameParameter("account")
+				.passwordParameter("password")
+//				.loginProcessingUrl("/account/login")
+				.failureUrl("/account/login?error=access_denied")
+				.successHandler(new EdexAuthenticationSuccessHandler())
+				//.successForwardUrl(forwardUrl)
+		.and()
+			.logout()
+				.logoutUrl("/account/logout")
+				.logoutSuccessUrl("/account/login")
+		.and()
+			.exceptionHandling()
+			.accessDeniedPage("/Access_Denied")
+		.and()
+			.csrf().disable();
 	}
 }

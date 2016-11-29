@@ -19,27 +19,34 @@ import org.springframework.web.util.WebAppRootListener;
 import com.edexsoft.matrix.portal.spring.AppConfig;
 
 // web.xml
-public class PortalWebAppInitializer implements WebApplicationInitializer {
-//public class PortalWebAppInitializer extends AbstractSecurityWebApplicationInitializer{
+//public class PortalWebAppInitializer implements WebApplicationInitializer {
+public class PortalWebAppInitializer extends AbstractSecurityWebApplicationInitializer{
 
 	private Logger logger = LogManager.getLogger(PortalWebAppInitializer.class);
 	
 	private static int times=0;
 
-	@Override
-	public void onStartup(ServletContext servletContext) {
+//	@Override
+//	public void onStartup(ServletContext servletContext) {
+	public void afterSpringSecurityFilterChain(ServletContext servletContext) {		
 		logger.info(String.format("WebAppInitializer startup, times: %s", ++times));
 
 		// Create the 'root' Spring application context
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		
+		// 两者二选一
+		// @Configuration
+		// AnnotationConfigWebApplicationContext.register(FooConfig.class)
+		
 		rootContext.register(AppConfig.class);
+		rootContext.register(WebMvcConfig.class);
+		rootContext.register(WebSecurityConfig.class);
 		rootContext.setServletContext(servletContext);
 
 		// Manage the lifecycle of the root application context
 		servletContext.addListener(new ContextLoaderListener(rootContext));		
 		servletContext.addListener(new IntrospectorCleanupListener());
-		servletContext.addListener(new WebAppRootListener());
-		
+		servletContext.addListener(new WebAppRootListener());		
 
 		// Create the dispatcher servlet's Spring application context
 //		AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
@@ -50,8 +57,7 @@ public class PortalWebAppInitializer implements WebApplicationInitializer {
 		FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", CharacterEncodingFilter.class);
 		characterEncodingFilter.addMappingForUrlPatterns(null, true, "/*");
 		characterEncodingFilter.setInitParameter("encoding", "UTF-8");
-		characterEncodingFilter.setInitParameter("forceEncoding", "true");
-			
+		characterEncodingFilter.setInitParameter("forceEncoding", "true");			
 
 		// Register and map the dispatcher servlet
 		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher",new DispatcherServlet(rootContext));
