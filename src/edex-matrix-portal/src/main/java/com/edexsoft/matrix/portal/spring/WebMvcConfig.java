@@ -43,16 +43,14 @@ import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConvert
 //@Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { 
-		"com.edexsoft.security,"+
-        "com.edexsoft.matrix.domain,"+
-        "com.edexsoft.matrix.portal,"+
-        "com.edexsoft.matrix.portal.controllers,"+
-        "com.edexsoft.matrix.portal.api.controllers,"+
-        "com.edexsoft.matrix.portal.api.root.controllers,"+
-        "com.edexsoft.matrix.portal.web.controllers,"+
-        "com.edexsoft.matrix.portal.m.controllers,"+
-        "com.edexsoft.matrix.portal.wx.controllers,"+
-        "com.edexsoft.matrix.portal.root.controllers" })
+		"com.edexsoft.matrix.portal,"+
+		"com.edexsoft.matrix.portal.controllers,"+
+		"com.edexsoft.matrix.portal.api.controllers,"+
+		"com.edexsoft.matrix.portal.api.root.controllers,"+
+		"com.edexsoft.matrix.portal.web.controllers,"+
+		"com.edexsoft.matrix.portal.m.controllers,"+
+		"com.edexsoft.matrix.portal.wx.controllers,"+
+		"com.edexsoft.matrix.portal.root.controllers" })
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	
 	private static final int CACHE_PERIOD = 31556926; // one year

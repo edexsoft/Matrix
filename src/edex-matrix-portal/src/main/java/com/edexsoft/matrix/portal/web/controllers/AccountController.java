@@ -26,9 +26,10 @@ public class AccountController {
 //	@Autowired
 //	@Qualifier("UserService")
 //	private IUserService UserService;
-	@Autowired
-	@Qualifier("EdexAuthenticationManager")
-	private AuthenticationManager authenticationManager;
+	
+//	@Autowired
+//	@Qualifier("EdexAuthenticationManager")
+//	private AuthenticationManager authenticationManager;
 	
 	@RequestMapping(value = { "/account", "/account/login" }, method = RequestMethod.GET)
 	public ModelAndView Login() {
@@ -38,14 +39,15 @@ public class AccountController {
 		return new ModelAndView(sView, oModel);
 	}
 
-	@RequestMapping(value = { "/account/login" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/account/login2" }, method = RequestMethod.POST)
 	public ModelAndView Login(@RequestParam("account") String account, @RequestParam("password") String password, String r) {
+		
 		List<GrantedAuthority> lstAuthority = new ArrayList<GrantedAuthority>();
 		lstAuthority.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		Authentication result = new UsernamePasswordAuthenticationToken(account, password, lstAuthority);
 		
-		
-		Authentication request = new UsernamePasswordAuthenticationToken(account, password);
-		Authentication result = authenticationManager.authenticate(request);
+//		Authentication request = new UsernamePasswordAuthenticationToken(account, password);
+//		Authentication result = authenticationManager.authenticate(request);
 		// 存入线程上下文
 		SecurityContextHolder.getContext().setAuthentication(result);
 		
@@ -54,6 +56,7 @@ public class AccountController {
 		Map<String, Object> oModel = new HashMap<String, Object>();
 		// oModel.put("userName", name);
 		return new ModelAndView(sView, oModel);
+		
 	}
 
 	@RequestMapping("/account/register")

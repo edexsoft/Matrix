@@ -11,8 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.edexsoft.matrix.portal.spring.security.EdexAuthenticationSuccessHandler;
+import com.edexsoft.security.EdexAuthenticationProvider;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -21,11 +22,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //	UserDetailsService userDetailsService;
 
 	@Autowired
+	@Qualifier("EdexAuthenticationProvider")
+    private EdexAuthenticationProvider edexAuthenticationProvider;
+
+	@Autowired
 	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+//		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+//	    auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
 		// auth.userDetailsService(userDetailsService);
 		// auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
+		auth.authenticationProvider(edexAuthenticationProvider);
 	}
-	
+
 //	@Bean
 //	@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 //	public UserDetails authenticatedUserDetails() {
@@ -47,22 +55,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// web.ignoring().antMatchers("/cdn/**");
 	}
 	
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-	//			.antMatchers("/", "/home").permitAll()
+//				.antMatchers("/", "/home").permitAll()
+//				.antMatchers("/account/login").permitAll()
 				.antMatchers("/api/root/**").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/root/**").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/member/**").access("hasRole('ROLE_MEMBER')")
 				.antMatchers("/api/member/**").access("hasRole('ROLE_MEMBER')")
-				.anyRequest().permitAll()
+//				.anyRequest().permitAll()
 		.and()
 			.formLogin()
 				.loginPage("/account/login")
 				.usernameParameter("account")
 				.passwordParameter("password")
-//				.loginProcessingUrl("/account/login")
+				.loginProcessingUrl("/account/login")
 				.failureUrl("/account/login?error=access_denied")
 				.successHandler(new EdexAuthenticationSuccessHandler())
 				//.successForwardUrl(forwardUrl)
@@ -73,6 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.exceptionHandling()
 			.accessDeniedPage("/Access_Denied")
+//		.and().httpBasic()
 		.and()
 			.csrf().disable();
 	}

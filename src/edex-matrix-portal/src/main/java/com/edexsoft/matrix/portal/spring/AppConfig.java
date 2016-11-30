@@ -6,6 +6,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
@@ -21,6 +22,10 @@ import org.springframework.core.env.Environment;
 //	RepositoryConfig.class, 
 //	ServiceConfig.class
 //})
+//@ImportResource("classpath:spring-mybatis.xml")
+@ComponentScan(basePackages = { 
+		"com.edexsoft.security,"+
+		"com.edexsoft.matrix.domain"})
 public class AppConfig {
 
 	private static final Logger logger = LogManager.getLogger(AppConfig.class);
