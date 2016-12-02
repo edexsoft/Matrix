@@ -1,9 +1,11 @@
 package com.edexsoft.matrix.portal.web.controllers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -48,8 +51,18 @@ public class AccountController {
 		
 //		Authentication request = new UsernamePasswordAuthenticationToken(account, password);
 //		Authentication result = authenticationManager.authenticate(request);
+		
 		// 存入线程上下文
 		SecurityContextHolder.getContext().setAuthentication(result);
+		
+//		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();		
+//		Set<String> roles = AuthorityUtils.authorityListToSet(authorities);
+//		
+//		if (roles.contains("ROLE_ADMIN")) {
+//		    response.sendRedirect("/root/home/index");
+//		} else if (roles.contains("ROLE_MEMBER")) {
+//		    response.sendRedirect("/member/home/index");
+//		}
 		
 		// String sView = "/web/account/login";
 		String sView = "redirect:/root/home/index";

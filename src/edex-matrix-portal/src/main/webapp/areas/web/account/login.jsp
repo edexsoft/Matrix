@@ -34,7 +34,7 @@
         <div class="login-box-body">
             <p class="login-box-msg">登录</p>
 
-            <form action="/account/login?r=x" method="post">
+            <form action="/account/login2?r=x" method="post">
                 <div class="form-group has-feedback">
                     <input type="text" name="account" class="form-control" placeholder="手机号"> 
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>

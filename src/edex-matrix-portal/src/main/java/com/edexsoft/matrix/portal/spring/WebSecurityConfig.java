@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/account/login")
 				.usernameParameter("account")
 				.passwordParameter("password")
-				.loginProcessingUrl("/account/login")
+//				.loginProcessingUrl("/account/login2")
 				.failureUrl("/account/login?error=access_denied")
 				.successHandler(new EdexAuthenticationSuccessHandler())
 				//.successForwardUrl(forwardUrl)
