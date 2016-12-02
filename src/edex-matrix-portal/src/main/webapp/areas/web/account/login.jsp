@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -33,6 +33,13 @@
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">登录</p>
+            
+			<c:if test="${param.error != null}">
+	            <p>Invalid username and password.</p>
+	        </c:if>
+	        <c:if test="${param.logout != null}">
+	            <p>You have been logged out.</p>
+	        </c:if>
 
             <form action="/account/login2?r=x" method="post">
                 <div class="form-group has-feedback">
