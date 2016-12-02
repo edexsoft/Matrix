@@ -1050,16 +1050,17 @@
     </div>
 
     <script src="/cdn/framework/javascript/jquery/3.1.0/jquery.js"></script>
-    <!-- jQuery UI 1.11.4 -->
+    <!-- jQuery UI 1.11.4 
     <script src="/cdn/framework/javascript/jQuery/ui/1.11.4/jquery-ui.js"></script>
+    -->
     <script src="/cdn/framework/style/bootstrap/3.3.7/bootstrap.js"></script>
     <script src="/cdn/thirdparty/AdminLTE/2.3.6/app.js"></script>
 
 
 
-    <script src="/cdn/theme/default/root/javascript/framework.js"></script>
-    <script src="/cdn/theme/default/shared/javascript/domain.js"></script>
-    <script src="/cdn/theme/default/root/javascript/app.js"></script>
+    <script src="/cdn/themes/default/shared/javascript/framework.js"></script>
+    <script src="/cdn/themes/default/shared/javascript/domain.js"></script>
+    <script src="/cdn/themes/default/root/javascript/app.js"></script>
 
 
 </body>
