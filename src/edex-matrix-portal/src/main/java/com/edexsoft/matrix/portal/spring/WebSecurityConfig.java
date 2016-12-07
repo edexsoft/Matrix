@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import com.edexsoft.matrix.portal.spring.security.EdexAuthenticationSuccessHandler;
 import com.edexsoft.security.EdexAuthenticationProvider;
 
-//@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
