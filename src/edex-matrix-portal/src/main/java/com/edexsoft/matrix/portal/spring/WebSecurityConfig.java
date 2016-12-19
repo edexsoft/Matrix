@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/root/**").access("hasRole('ROLE_ADMIN')")
 				.antMatchers("/member/**").access("hasRole('ROLE_MEMBER')")
 				.antMatchers("/api/member/**").access("hasRole('ROLE_MEMBER')")
+//				.antMatchers("/api/wx/**").access("hasRole('ROLE_API_USER') and hasIpAddress('192.168.1.0/24')")
 //				.anyRequest().permitAll()
 		.and()
 			.formLogin()

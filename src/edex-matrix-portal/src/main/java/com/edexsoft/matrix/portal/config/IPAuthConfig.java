@@ -5,13 +5,13 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-public class PortalConfig {
-	private static Logger logger = Logger.getLogger(PortalConfig.class);
+public class IPAuthConfig {
+	private static Logger logger = Logger.getLogger(IPAuthConfig.class);
 
-	private static final String RESOURCE_PROPERTIES = "portal.properties";
+	private static final String RESOURCE_PROPERTIES = "ipauth.properties";
 
 //	public static final String UPLOAD_PATH;
-	public static final String WEBAPP_ROOT_KEY;
+	public static final String WX_API_MARKETING;
 
 	static {
 
@@ -28,6 +28,6 @@ public class PortalConfig {
 		}
 
 //		UPLOAD_PATH = properties.getProperty("upload_path", null);
-		WEBAPP_ROOT_KEY = properties.getProperty("webapp.root.key", null);
+		WX_API_MARKETING = properties.getProperty("wx.api.marketing", null);
 	}
 }
