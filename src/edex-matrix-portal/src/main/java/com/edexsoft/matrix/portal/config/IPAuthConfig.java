@@ -10,8 +10,8 @@ public class IPAuthConfig {
 
 	private static final String RESOURCE_PROPERTIES = "ipauth.properties";
 
-//	public static final String UPLOAD_PATH;
 	public static final String WX_API_MARKETING;
+	public static final String LOCAL;
 
 	static {
 
@@ -27,7 +27,7 @@ public class IPAuthConfig {
 			logger.error(e);
 		}
 
-//		UPLOAD_PATH = properties.getProperty("upload_path", null);
-		WX_API_MARKETING = properties.getProperty("wx.api.marketing", null);
+		LOCAL=properties.getProperty("local", null);
+		WX_API_MARKETING = properties.getProperty("wx.api.marketing", null);		
 	}
 }

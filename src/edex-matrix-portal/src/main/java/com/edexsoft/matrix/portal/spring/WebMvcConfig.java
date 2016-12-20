@@ -239,6 +239,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		Map<String, String> mapIPAuth = new HashMap<String, String>();
+		mapIPAuth.put("local", IPAuthConfig.LOCAL);
 		mapIPAuth.put("wx.api.marketing", IPAuthConfig.WX_API_MARKETING);
 		registry.addInterceptor(new IPAddressAuthorizeInterceptor(mapIPAuth)).addPathPatterns("/api/wx/marketing/**");
 		// registry.addInterceptor(new LocaleInterceptor());
