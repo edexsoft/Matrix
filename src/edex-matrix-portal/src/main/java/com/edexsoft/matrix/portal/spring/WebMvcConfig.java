@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.context.support.ServletContextResource;
@@ -51,7 +53,17 @@ import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConvert
 		+ "com.edexsoft.matrix.portal.api.controllers," + "com.edexsoft.matrix.portal.api.root.controllers,"
 		+ "com.edexsoft.matrix.portal.web.controllers," + "com.edexsoft.matrix.portal.m.controllers,"
 		+ "com.edexsoft.matrix.portal.wx.controllers," + "com.edexsoft.matrix.portal.root.controllers" })
+//@PropertySource("classpath:portal.properties")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+	
+//	/**
+//     * Ensures that placeholders are replaced with property values
+//     * 可以使用 @Value("${webapp.root.key}") 的方式注入portal.properties文件中的配置值
+//     */
+//    @Bean
+//    static PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer() {
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 
 	private static final int CACHE_PERIOD = 31556926; // one year
 
