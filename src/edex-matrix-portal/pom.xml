@@ -10,6 +10,7 @@
 
 	<artifactId>edex-matrix-portal</artifactId>
 	<packaging>war</packaging>
+	
 	<name>edex-matrix-portal Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
