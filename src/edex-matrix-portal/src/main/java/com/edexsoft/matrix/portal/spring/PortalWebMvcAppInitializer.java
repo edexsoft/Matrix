@@ -26,6 +26,7 @@ public class PortalWebMvcAppInitializer extends AbstractAnnotationConfigDispatch
         servletContext.setInitParameter("webAppRootKey", "matrix.portal");
         
         // 监听器
+        // a Listener is a a component that performs actions when specific events occur, usually Tomcat starting or Tomcat stopping
 		servletContext.addListener(new IntrospectorCleanupListener());	// 防止Spring内存溢出监听器
 		servletContext.addListener(new WebAppRootListener());			// 负责将 Web 应用根目录以 webAppRootKey 上下文参数指定的属性名添加到系统参数中 
     }

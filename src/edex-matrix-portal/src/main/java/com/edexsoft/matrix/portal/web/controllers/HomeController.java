@@ -22,6 +22,8 @@ public class HomeController {
 		String sWxApiMarketing=IPAuthConfig.WX_API_MARKETING;
 		String sWxSecret=WxApiConfig.WX_SECRET;
 		
+//		MyPrincipal p = request.getUserPrincipal();
+		
 		String sView = "/web/home/index";		
 		Map<String, Object> oModel = new HashMap<String, Object>();
 		// oModel.put("userName", name);
