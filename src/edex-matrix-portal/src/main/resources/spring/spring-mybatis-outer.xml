@@ -13,7 +13,7 @@
 
 	<!-- <tx:annotation-driven></tx:annotation-driven> -->
 
-	<!-- mingyuan saledatabase -->
+	<!-- outer database -->
 	<bean id="dataSource_outer"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="net.sourceforge.jtds.jdbc.Driver" />
