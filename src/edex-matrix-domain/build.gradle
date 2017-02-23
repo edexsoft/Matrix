@@ -1,0 +1,27 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.edexsoft.matrix'
+version = '0.0.1-SNAPSHOT'
+
+description = """edex-matrix-domain"""
+
+sourceCompatibility = 1.5
+targetCompatibility = 1.5
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'log4j', name: 'log4j', version:'1.2.17'
+    compile group: 'com.edexsoft', name: 'edex-framework', version:'0.0.1-SNAPSHOT'
+    compile group: 'com.edexsoft', name: 'edex-data', version:'0.0.1-SNAPSHOT'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.8.3'
+    testCompile group: 'junit', name: 'junit', version:'3.8.1'
+}

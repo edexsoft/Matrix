@@ -10,11 +10,11 @@
 	</properties>
 	
 	<groupId>com.edexsoft.matrix</groupId>
-	<artifactId>edex-matrix-parent</artifactId>
+	<artifactId>edex-matrix</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>edex-matrix-parent</name>
+	<name>edex-matrix</name>
 	<url>http://maven.apache.org</url>
 	
 	<dependencies>
@@ -45,12 +45,14 @@
 		</dependency>
 	</dependencies>
 
-	 <modules>  
-        <module>../edex-matrix-domain</module>
-        <module>../edex-matrix-domain-implement</module>
-        <module>../edex-matrix-outer-domain</module>
-        <module>../edex-matrix-outer-domain-implement</module>
-        <module>../edex-matrix-portal</module>
+	<modules>  
+        <module>edex-matrix-domain</module>
+        <module>edex-matrix-domain-implement</module>
+        <module>edex-matrix-outer-domain</module>
+        <module>edex-matrix-outer-domain-implement</module>
+		<!--
+        <module>edex-matrix-portal</module>
+		-->
     </modules>  
 
 	<build>
