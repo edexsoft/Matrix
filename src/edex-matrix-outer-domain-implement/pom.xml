@@ -4,7 +4,7 @@
 	
 	<parent>
 		<groupId>com.edexsoft.matrix</groupId>
-		<artifactId>edex-matrix-parent</artifactId>
+		<artifactId>edex-matrix</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	

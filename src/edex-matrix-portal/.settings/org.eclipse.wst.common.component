@@ -4,9 +4,6 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="mybatis-spring-1.3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mybatis-spring/mybatis-spring">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <property name="context-root" value="edex-matrix-portal"/>
         <property name="java-output-path" value="/edex-matrix-portal/target/classes"/>
     </wb-module>
